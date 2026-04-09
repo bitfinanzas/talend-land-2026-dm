@@ -3,21 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Talent Land 2026 MX</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Como la IA Puede Hacerte un Mejor Trader — Daniel Muvdi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #0a0e1a;
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 50% 40% at 50% 30%, rgba(20,60,140,0.15) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 50% at 50% 80%, rgba(10,30,80,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(30,80,180,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 2px solid rgba(100,160,255,0.2);
+            overflow: hidden;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+            background: #1a2540;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-title {
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 700;
+            line-height: 1.15;
+            color: #fff;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+        }
+
+        .hero-sub {
+            font-size: 16px;
+            color: #8a9ab5;
+            line-height: 1.6;
+            max-width: 560px;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-author {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        .hero-author-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .hero-author-role {
+            font-size: 13px;
+            color: #5a6a85;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Nav links */
+        .prompts-nav {
+            margin-top: 60px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+        .prompts-nav a {
+            display: inline-block;
+            padding: 10px 22px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            color: #8a9ab5;
+            text-decoration: none;
+            font-size: 13px;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.2s;
+        }
+        .prompts-nav a:hover {
+            background: rgba(96,165,250,0.08);
+            border-color: rgba(96,165,250,0.25);
+            color: #c0d4f0;
+        }
+
+        /* Logo bottom corner */
+        .logo-bottom {
+            position: fixed;
+            bottom: 20px;
+            right: 24px;
+            opacity: 0.6;
+            z-index: 10;
+        }
+
+        @media (max-width: 600px) {
+            .hero { padding: 40px 20px; }
+            .prompts-nav { flex-direction: column; align-items: center; }
+            .prompts-nav a { width: 100%; max-width: 280px; text-align: center; }
+        }
+    </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html">Inicio</a>
-        <a href="pages/prompt-1.html">Prompt 1</a>
-        <a href="pages/prompt-2-avanzado.html">Prompt 2 Avanzado</a>
-        <a href="pages/prompt-3-earnings.html">Prompt 3 Earnings</a>
-        <a href="pages/prompt-briefing.html">Prompt Briefing</a>
-    </nav>
-    <main>
-        <h1>Talent Land 2026 MX</h1>
-        <p>Bienvenido al sitio del evento.</p>
-    </main>
-    <script src="js/main.js"></script>
+    <section class="hero">
+        <div class="avatar">
+            <img src="public/logo-white.png" alt="Daniel Muvdi" />
+        </div>
+
+        <h1 class="hero-title">Como la IA Puede Hacerte un Mejor Trader</h1>
+
+        <p class="hero-sub">Experiencia, criterio y herramientas practicas para analizar mejor, estructurar portafolios y operar con mas disciplina.</p>
+
+        <div class="hero-author">
+            <div class="hero-author-name">Daniel Muvdi</div>
+            <div class="hero-author-role">20 anos de experiencia en mercados</div>
+        </div>
+
+        <nav class="prompts-nav">
+            <a href="pages/prompt-1.html">Prompt 1 — Portafolio V2</a>
+            <a href="pages/prompt-2-avanzado.html">Prompt 2 — Avanzado</a>
+            <a href="pages/prompt-3-earnings.html">Prompt 3 — Earnings</a>
+            <a href="pages/prompt-briefing.html">Prompt — Briefing</a>
+        </nav>
+    </section>
+
+    <div class="logo-bottom">
+        <img src="public/logo-white.png" alt="Daniel Muvdi Trading Coach" style="width:60px;height:auto;" />
+    </div>
 </body>
 </html>
