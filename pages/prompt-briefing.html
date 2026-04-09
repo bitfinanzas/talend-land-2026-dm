@@ -4,24 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pre-Market · 09 APR 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:      #080b0e;
-    --bg2:     #0d1117;
-    --bg3:     #111820;
-    --b1:      #1a2230;
-    --b2:      #243040;
-    --t1:      #cdd8e3;
-    --t2:      #7a8fa3;
-    --t3:      #3d5068;
-    --acc:     #f5a623;
-    --grn:     #22a87a;
-    --red:     #e05050;
-    --blu:     #3d8fe0;
-    --amb:     #e8a020;
-    --mono:    'IBM Plex Mono', monospace;
-    --sans:    'IBM Plex Sans', sans-serif;
+    --bg:      #1a1a1a;
+    --bg2:     #222;
+    --bg3:     #2a2a2a;
+    --b1:      rgba(255,255,255,0.08);
+    --b2:      rgba(255,255,255,0.15);
+    --t1:      #e8e8e8;
+    --t2:      #a0a0a0;
+    --t3:      #666;
+    --acc:     #60a5fa;
+    --grn:     #4ade80;
+    --red:     #f87171;
+    --blu:     #60a5fa;
+    --amb:     #fbbf24;
+    --mono:    'JetBrains Mono', monospace;
+    --sans:    'Inter', sans-serif;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { font-size: 13px; }
@@ -32,13 +32,16 @@
     line-height: 1.5;
     min-height: 100vh;
   }
-  body::after {
-    content: '';
-    position: fixed; inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px);
-    pointer-events: none; z-index: 9999;
+  .wrap { max-width: 1140px; margin: 0 auto; position: relative; }
+  .logo-corner {
+    position: absolute;
+    top: 52px;
+    right: 24px;
+    z-index: 10;
+    background: var(--bg);
+    padding: 4px 0 4px 12px;
+    border-radius: 8px;
   }
-  .wrap { max-width: 1140px; margin: 0 auto; }
 
   .topbar {
     background: var(--bg2);
@@ -95,7 +98,7 @@
   .sec-hd { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
   .sec-n {
     font-family: var(--mono); font-size: 9px; color: var(--acc); font-weight: 500;
-    border: 1px solid rgba(245,166,35,.3); padding: 1px 7px; border-radius: 2px; letter-spacing: .08em;
+    border: 1px solid rgba(96,165,250,.3); padding: 1px 7px; border-radius: 2px; letter-spacing: .08em;
   }
   .sec-t { font-family: var(--mono); font-size: 9px; color: var(--t3); letter-spacing: .12em; }
 
@@ -166,7 +169,7 @@
   .lvl-lbl { font-family: var(--mono); font-size: 9px; color: var(--t3); width: 36px; flex-shrink: 0; }
   .lvl-track { flex: 1; height: 4px; background: var(--b1); border-radius: 2px; overflow: hidden; }
   .lvl-fill { height: 100%; border-radius: 2px; }
-  .f-px  { background: var(--acc); }
+  .f-px  { background: var(--blu); }
   .f-50  { background: var(--amb); }
   .f-200 { background: var(--t3); }
   .lvl-v { font-family: var(--mono); font-size: 10px; color: var(--t2); width: 52px; text-align: right; }
@@ -189,16 +192,16 @@
     padding: 9px 11px; resize: vertical; min-height: 68px;
     outline: none; transition: border-color .2s; line-height: 1.6;
   }
-  textarea:focus { border-color: rgba(245,166,35,.5); }
+  textarea:focus { border-color: rgba(96,165,250,.5); }
   textarea::placeholder { color: var(--t3); }
   .run-btn {
     margin-top: 8px; width: 100%;
-    background: rgba(245,166,35,.07); border: 1px solid rgba(245,166,35,.22); border-radius: 3px;
+    background: rgba(96,165,250,.07); border: 1px solid rgba(96,165,250,.22); border-radius: 3px;
     padding: 9px 14px; color: var(--acc); font-family: var(--mono); font-size: 10px; font-weight: 500;
     letter-spacing: .08em; cursor: pointer; transition: background .2s, border-color .2s;
     display: flex; align-items: center; gap: 8px;
   }
-  .run-btn:hover { background: rgba(245,166,35,.13); border-color: rgba(245,166,35,.38); }
+  .run-btn:hover { background: rgba(96,165,250,.13); border-color: rgba(96,165,250,.38); }
   .run-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
   #ai-out {
     margin-top: 10px; font-size: 11px; color: var(--t2); line-height: 1.75;
@@ -206,7 +209,7 @@
     border-top: 1px solid var(--b1); padding-top: 10px; display: none;
   }
   .spin-wrap { display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--t3); }
-  .spinner { width: 10px; height: 10px; border: 1px solid var(--b2); border-top-color: var(--acc); border-radius: 50%; animation: spin .8s linear infinite; flex-shrink: 0; }
+  .spinner { width: 10px; height: 10px; border: 1px solid var(--b2); border-top-color: var(--blu); border-radius: 50%; animation: spin .8s linear infinite; flex-shrink: 0; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
   .footer {
@@ -230,6 +233,10 @@
 </head>
 <body>
 <div class="wrap">
+
+  <div class="logo-corner">
+    <img src="../public/logo-white.png" alt="Daniel Muvdi Trading Coach" style="width:80px;height:auto;display:block;opacity:0.85;" />
+  </div>
 
   <div class="topbar">
     <div class="tb-tickers">
