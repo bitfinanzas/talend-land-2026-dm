@@ -149,19 +149,35 @@
     font-family: 'JetBrains Mono', monospace;
   }
 
-  /* Tables */
-  .tables-grid {
+  /* Two-panel layout */
+  .panel-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0,1fr));
+    grid-template-columns: 1fr 1.2fr;
     gap: 16px; margin-bottom: 20px;
   }
-  .table-wrap {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden; margin-bottom: 20px;
+
+  /* Allocation Bars */
+  .alloc-section {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 24px;
   }
-  .tables-grid .table-wrap { margin-bottom: 0; }
+  .alloc-bar-row {
+    display: grid; grid-template-columns: 100px 1fr 52px;
+    align-items: center; gap: 14px; margin-bottom: 12px;
+  }
+  .alloc-bar-row:last-child { margin-bottom: 0; }
+  .alloc-ticker { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: var(--text); }
+  .alloc-ticker small { display: block; font-size: 10px; color: var(--text3); font-weight: 400; margin-top: 1px; }
+  .alloc-track { height: 6px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
+  .alloc-fill { height: 100%; border-radius: 3px; }
+  .alloc-pct { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text2); text-align: right; }
+
+  /* Table */
+  .table-wrap {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 20px;
+  }
+  .panel-grid .table-wrap { margin-bottom: 0; }
   .table-wrap table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
   .table-wrap thead th {
     background: var(--surface2); font-size: 10px; font-weight: 600;
@@ -175,14 +191,28 @@
   .table-wrap tbody tr:last-child td { border-bottom: none; }
   .table-wrap tbody tr:hover td { background: var(--surface2); }
   .t-ticker { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 13px; color: var(--text); }
-  .t-name { font-size: 11px; color: var(--text2); }
-  .t-mono { font-family: 'JetBrains Mono', monospace; color: var(--text2); font-size: 12px; }
-  .t-right { text-align: right; }
-  .t-green { color: var(--green); font-family: 'JetBrains Mono', monospace; font-weight: 500; }
-  .t-red { color: var(--red); font-family: 'JetBrains Mono', monospace; font-weight: 500; }
-  .t-bar { width: 50px; }
-  .alloc-mini-track { height: 5px; background: var(--surface3); border-radius: 3px; overflow: hidden; min-width: 50px; }
-  .alloc-mini-fill { height: 100%; border-radius: 3px; }
+  .t-price { font-family: 'JetBrains Mono', monospace; color: var(--text2); }
+  .t-target { font-family: 'JetBrains Mono', monospace; color: var(--text); font-weight: 500; }
+  .t-up { color: var(--green); font-family: 'JetBrains Mono', monospace; font-weight: 500; }
+  .risk-bar { display: flex; align-items: center; gap: 8px; }
+  .risk-dots { display: flex; gap: 3px; }
+  .risk-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .risk-label { font-size: 11px; color: var(--text3); }
+  .rating-chip {
+    font-size: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 500;
+    padding: 3px 8px; border-radius: 4px; border: 0.5px solid; letter-spacing: .04em;
+  }
+
+  /* Fund Legend */
+  .fund-legend {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 20px;
+    display: flex; gap: 20px; flex-wrap: wrap; align-items: center;
+  }
+  .fund-legend-label { font-size: 10px; color: var(--text3); letter-spacing: .1em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; flex-shrink: 0; }
+  .fund-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .fund-pill { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text2); }
+  .fund-pill-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
   /* Charts Grid */
   .charts-grid {
@@ -225,22 +255,15 @@
   }
   .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text2); font-family: 'JetBrains Mono', monospace; }
   .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
-  /* Small donut */
   .donut-sm { width: 160px; height: 160px; }
   .donut-sm::after { inset: 38px; }
 
   /* Analysis Sections */
-  .analysis-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px; margin-bottom: 20px;
-  }
   .analysis-card {
     background: var(--surface);
     border: 0.5px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 24px;
+    padding: 24px; margin-bottom: 16px;
   }
   .analysis-title {
     font-size: 14px; font-weight: 600; color: var(--accent2);
@@ -289,7 +312,7 @@
 
   @media (max-width: 780px) {
     .metrics-row { grid-template-columns: repeat(2,1fr); }
-    .tables-grid { grid-template-columns: 1fr; }
+    .panel-grid { grid-template-columns: 1fr; }
     .charts-grid { grid-template-columns: 1fr; }
     .main-title { font-size: 24px; }
     .header { flex-direction: column; align-items: flex-start; gap: 16px; }
@@ -307,7 +330,7 @@
         <img src="../public/logo-white.png" alt="Daniel Muvdi Trading Coach" style="width:90px;height:auto;display:block;" />
       </div>
       <div class="header-text">
-        <div class="eyebrow">Prompt 1 — Portafolio Generado por IA</div>
+        <div class="eyebrow">Prompt 1 — Analisis de Portafolio IA</div>
         <h1 class="main-title">Portafolio <em>Diversificado</em><br>Smart Money 2026</h1>
         <div class="coach-tag">by <strong>Daniel Muvdi</strong> · Trading Coach</div>
       </div>
@@ -344,113 +367,150 @@
     </div>
   </div>
 
-  <!-- TABLES: Holdings + Key Stats -->
-  <div class="section-label animate d5"><h2>Composicion del portafolio</h2></div>
-  <div class="tables-grid animate d6">
-    <!-- Left Table: Main Holdings -->
+  <!-- TWO-PANEL: Allocation Bars + Price/Target Table -->
+  <div class="section-label animate d5"><h2>Distribucion del portafolio</h2></div>
+  <div class="panel-grid animate d6">
+
+    <!-- LEFT: Allocation Bars -->
+    <div class="alloc-section">
+      <div class="alloc-bar-row">
+        <div class="alloc-ticker">AAPL <small>Tecnologia</small></div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:100%;background:linear-gradient(90deg,#1a5fc8,#3d9eff)"></div></div>
+        <div class="alloc-pct">14%</div>
+      </div>
+      <div class="alloc-bar-row">
+        <div class="alloc-ticker">MSFT <small>Tecnologia / Cloud</small></div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:93%;background:linear-gradient(90deg,#1a5fc8,#3d9eff)"></div></div>
+        <div class="alloc-pct">13%</div>
+      </div>
+      <div class="alloc-bar-row">
+        <div class="alloc-ticker">NVDA <small>Semiconductores IA</small></div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:86%;background:linear-gradient(90deg,#2279e0,#4ec9e8)"></div></div>
+        <div class="alloc-pct">12%</div>
+      </div>
+      <div class="alloc-bar-row">
+        <div class="alloc-ticker">GOOGL <small>Tecnologia / Ads</small></div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:71%;background:linear-gradient(90deg,#2279e0,#72c0ff)"></div></div>
+        <div class="alloc-pct">10%</div>
+      </div>
+      <div class="alloc-bar-row">
+        <div class="alloc-ticker">AMZN <small>E-Commerce / Cloud</small></div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:64%;background:linear-gradient(90deg,#3a4acc,#7b8cff)"></div></div>
+        <div class="alloc-pct">9%</div>
+      </div>
+      <div class="alloc-bar-row">
+        <div class="alloc-ticker">META <small>Tecnologia / IA</small></div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:57%;background:linear-gradient(90deg,#3a4acc,#a78bfa)"></div></div>
+        <div class="alloc-pct">8%</div>
+      </div>
+      <div class="alloc-bar-row">
+        <div class="alloc-ticker">BRK.B <small>Financiero</small></div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:50%;background:linear-gradient(90deg,#1560b0,#38bdf8)"></div></div>
+        <div class="alloc-pct">7%</div>
+      </div>
+      <div class="alloc-bar-row">
+        <div class="alloc-ticker">JPM <small>Banca</small></div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:50%;background:linear-gradient(90deg,#1560b0,#38bdf8)"></div></div>
+        <div class="alloc-pct">7%</div>
+      </div>
+      <div class="alloc-bar-row">
+        <div class="alloc-ticker">UNH <small>Salud</small></div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:43%;background:linear-gradient(90deg,#166534,#38d9a9)"></div></div>
+        <div class="alloc-pct">6%</div>
+      </div>
+      <div class="alloc-bar-row">
+        <div class="alloc-ticker">V <small>Pagos digitales</small></div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:36%;background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div>
+        <div class="alloc-pct">5%</div>
+      </div>
+      <div class="alloc-bar-row">
+        <div class="alloc-ticker">JNJ <small>Salud / Defensivo</small></div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:29%;background:linear-gradient(90deg,#166534,#38d9a9)"></div></div>
+        <div class="alloc-pct">4%</div>
+      </div>
+      <div class="alloc-bar-row">
+        <div class="alloc-ticker" style="color:var(--text2)">CASH <small>Reserva tactica</small></div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:36%;background:linear-gradient(90deg,#374151,#6b7280)"></div></div>
+        <div class="alloc-pct">5%</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Price / Target / Risk Table -->
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Ticker</th><th>Empresa</th><th>Peso</th><th></th><th class="t-right">Valor</th></tr>
+          <tr><th>Ticker</th><th>Precio</th><th>Target 24M</th><th>Potencial</th><th>Riesgo</th><th>Rating</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td class="t-ticker">AAPL</td>
-            <td class="t-name">Apple Inc.</td>
-            <td class="t-mono">14.0%</td>
-            <td class="t-bar"><div class="alloc-mini-track"><div class="alloc-mini-fill" style="width:100%;background:linear-gradient(90deg,#1a5fc8,#3d9eff)"></div></div></td>
-            <td class="t-mono t-right">$3,500</td>
+            <td class="t-ticker">AAPL</td><td class="t-price">~$198</td><td class="t-target">$240-$270</td><td class="t-up">+21-36%</td>
+            <td><div class="risk-bar"><div class="risk-dots"><div class="risk-dot" style="background:var(--green)"></div><div class="risk-dot" style="background:var(--green)"></div><div class="risk-dot" style="background:var(--surface3)"></div><div class="risk-dot" style="background:var(--surface3)"></div></div><span class="risk-label">Bajo</span></div></td>
+            <td><span class="rating-chip" style="color:var(--blue-sky);border-color:rgba(61,158,255,0.3);background:var(--accent-dim)">Strong Buy</span></td>
           </tr>
           <tr>
-            <td class="t-ticker">MSFT</td>
-            <td class="t-name">Microsoft Corp.</td>
-            <td class="t-mono">13.0%</td>
-            <td class="t-bar"><div class="alloc-mini-track"><div class="alloc-mini-fill" style="width:93%;background:linear-gradient(90deg,#1a5fc8,#3d9eff)"></div></div></td>
-            <td class="t-mono t-right">$3,250</td>
+            <td class="t-ticker">MSFT</td><td class="t-price">~$420</td><td class="t-target">$520-$580</td><td class="t-up">+24-38%</td>
+            <td><div class="risk-bar"><div class="risk-dots"><div class="risk-dot" style="background:var(--green)"></div><div class="risk-dot" style="background:var(--green)"></div><div class="risk-dot" style="background:var(--surface3)"></div><div class="risk-dot" style="background:var(--surface3)"></div></div><span class="risk-label">Bajo</span></div></td>
+            <td><span class="rating-chip" style="color:var(--blue-sky);border-color:rgba(61,158,255,0.3);background:var(--accent-dim)">Strong Buy</span></td>
           </tr>
           <tr>
-            <td class="t-ticker">NVDA</td>
-            <td class="t-name">NVIDIA Corp.</td>
-            <td class="t-mono">12.0%</td>
-            <td class="t-bar"><div class="alloc-mini-track"><div class="alloc-mini-fill" style="width:86%;background:linear-gradient(90deg,#2279e0,#4ec9e8)"></div></div></td>
-            <td class="t-mono t-right">$3,000</td>
+            <td class="t-ticker">NVDA</td><td class="t-price">~$880</td><td class="t-target">$1,200-$1,500</td><td class="t-up">+36-70%</td>
+            <td><div class="risk-bar"><div class="risk-dots"><div class="risk-dot" style="background:var(--red)"></div><div class="risk-dot" style="background:var(--red)"></div><div class="risk-dot" style="background:var(--red)"></div><div class="risk-dot" style="background:var(--surface3)"></div></div><span class="risk-label">Alto</span></div></td>
+            <td><span class="rating-chip" style="color:var(--cyan);border-color:rgba(78,201,232,0.3);background:var(--cyan-dim)">Strong Buy</span></td>
           </tr>
           <tr>
-            <td class="t-ticker">GOOGL</td>
-            <td class="t-name">Alphabet Inc.</td>
-            <td class="t-mono">10.0%</td>
-            <td class="t-bar"><div class="alloc-mini-track"><div class="alloc-mini-fill" style="width:71%;background:linear-gradient(90deg,#2279e0,#72c0ff)"></div></div></td>
-            <td class="t-mono t-right">$2,500</td>
+            <td class="t-ticker">GOOGL</td><td class="t-price">~$165</td><td class="t-target">$210-$240</td><td class="t-up">+27-45%</td>
+            <td><div class="risk-bar"><div class="risk-dots"><div class="risk-dot" style="background:var(--amber)"></div><div class="risk-dot" style="background:var(--amber)"></div><div class="risk-dot" style="background:var(--surface3)"></div><div class="risk-dot" style="background:var(--surface3)"></div></div><span class="risk-label">Medio</span></div></td>
+            <td><span class="rating-chip" style="color:var(--blue-sky);border-color:rgba(61,158,255,0.3);background:var(--accent-dim)">Buy</span></td>
           </tr>
           <tr>
-            <td class="t-ticker">AMZN</td>
-            <td class="t-name">Amazon.com Inc.</td>
-            <td class="t-mono">9.0%</td>
-            <td class="t-bar"><div class="alloc-mini-track"><div class="alloc-mini-fill" style="width:64%;background:linear-gradient(90deg,#3a4acc,#7b8cff)"></div></div></td>
-            <td class="t-mono t-right">$2,250</td>
+            <td class="t-ticker">AMZN</td><td class="t-price">~$195</td><td class="t-target">$240-$280</td><td class="t-up">+23-44%</td>
+            <td><div class="risk-bar"><div class="risk-dots"><div class="risk-dot" style="background:var(--amber)"></div><div class="risk-dot" style="background:var(--amber)"></div><div class="risk-dot" style="background:var(--surface3)"></div><div class="risk-dot" style="background:var(--surface3)"></div></div><span class="risk-label">Medio</span></div></td>
+            <td><span class="rating-chip" style="color:var(--blue-sky);border-color:rgba(61,158,255,0.3);background:var(--accent-dim)">Buy</span></td>
           </tr>
           <tr>
-            <td class="t-ticker">META</td>
-            <td class="t-name">Meta Platforms</td>
-            <td class="t-mono">8.0%</td>
-            <td class="t-bar"><div class="alloc-mini-track"><div class="alloc-mini-fill" style="width:57%;background:linear-gradient(90deg,#3a4acc,#a78bfa)"></div></div></td>
-            <td class="t-mono t-right">$2,000</td>
+            <td class="t-ticker">META</td><td class="t-price">~$600</td><td class="t-target">$750-$900</td><td class="t-up">+25-50%</td>
+            <td><div class="risk-bar"><div class="risk-dots"><div class="risk-dot" style="background:var(--red)"></div><div class="risk-dot" style="background:var(--red)"></div><div class="risk-dot" style="background:var(--red)"></div><div class="risk-dot" style="background:var(--surface3)"></div></div><span class="risk-label">Alto</span></div></td>
+            <td><span class="rating-chip" style="color:var(--cyan);border-color:rgba(78,201,232,0.3);background:var(--cyan-dim)">Strong Buy</span></td>
+          </tr>
+          <tr>
+            <td class="t-ticker">BRK.B</td><td class="t-price">~$480</td><td class="t-target">$530-$580</td><td class="t-up">+10-21%</td>
+            <td><div class="risk-bar"><div class="risk-dots"><div class="risk-dot" style="background:var(--green)"></div><div class="risk-dot" style="background:var(--surface3)"></div><div class="risk-dot" style="background:var(--surface3)"></div><div class="risk-dot" style="background:var(--surface3)"></div></div><span class="risk-label">Muy bajo</span></div></td>
+            <td><span class="rating-chip" style="color:var(--green);border-color:rgba(56,217,169,0.3);background:var(--green-dim)">Hold / Buy</span></td>
+          </tr>
+          <tr>
+            <td class="t-ticker">JPM</td><td class="t-price">~$245</td><td class="t-target">$280-$320</td><td class="t-up">+14-31%</td>
+            <td><div class="risk-bar"><div class="risk-dots"><div class="risk-dot" style="background:var(--green)"></div><div class="risk-dot" style="background:var(--green)"></div><div class="risk-dot" style="background:var(--surface3)"></div><div class="risk-dot" style="background:var(--surface3)"></div></div><span class="risk-label">Bajo</span></div></td>
+            <td><span class="rating-chip" style="color:var(--indigo);border-color:rgba(123,140,255,0.3);background:var(--indigo-dim)">Buy</span></td>
+          </tr>
+          <tr>
+            <td class="t-ticker">UNH</td><td class="t-price">~$510</td><td class="t-target">$600-$650</td><td class="t-up">+18-27%</td>
+            <td><div class="risk-bar"><div class="risk-dots"><div class="risk-dot" style="background:var(--green)"></div><div class="risk-dot" style="background:var(--green)"></div><div class="risk-dot" style="background:var(--surface3)"></div><div class="risk-dot" style="background:var(--surface3)"></div></div><span class="risk-label">Bajo</span></div></td>
+            <td><span class="rating-chip" style="color:var(--green);border-color:rgba(56,217,169,0.3);background:var(--green-dim)">Buy Defensivo</span></td>
+          </tr>
+          <tr>
+            <td class="t-ticker">V</td><td class="t-price">~$310</td><td class="t-target">$360-$400</td><td class="t-up">+16-29%</td>
+            <td><div class="risk-bar"><div class="risk-dots"><div class="risk-dot" style="background:var(--green)"></div><div class="risk-dot" style="background:var(--surface3)"></div><div class="risk-dot" style="background:var(--surface3)"></div><div class="risk-dot" style="background:var(--surface3)"></div></div><span class="risk-label">Muy bajo</span></div></td>
+            <td><span class="rating-chip" style="color:var(--green);border-color:rgba(56,217,169,0.3);background:var(--green-dim)">Core Hold</span></td>
+          </tr>
+          <tr>
+            <td class="t-ticker">JNJ</td><td class="t-price">~$155</td><td class="t-target">$175-$195</td><td class="t-up">+13-26%</td>
+            <td><div class="risk-bar"><div class="risk-dots"><div class="risk-dot" style="background:var(--green)"></div><div class="risk-dot" style="background:var(--surface3)"></div><div class="risk-dot" style="background:var(--surface3)"></div><div class="risk-dot" style="background:var(--surface3)"></div></div><span class="risk-label">Muy bajo</span></div></td>
+            <td><span class="rating-chip" style="color:var(--green);border-color:rgba(56,217,169,0.3);background:var(--green-dim)">Buy + Dividendo</span></td>
           </tr>
         </tbody>
       </table>
     </div>
+  </div>
 
-    <!-- Right Table: Remaining Holdings -->
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Ticker</th><th>Empresa</th><th>Peso</th><th></th><th class="t-right">Valor</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="t-ticker">BRK.B</td>
-            <td class="t-name">Berkshire Hathaway</td>
-            <td class="t-mono">7.0%</td>
-            <td class="t-bar"><div class="alloc-mini-track"><div class="alloc-mini-fill" style="width:50%;background:linear-gradient(90deg,#1560b0,#38bdf8)"></div></div></td>
-            <td class="t-mono t-right">$1,750</td>
-          </tr>
-          <tr>
-            <td class="t-ticker">JPM</td>
-            <td class="t-name">JPMorgan Chase</td>
-            <td class="t-mono">7.0%</td>
-            <td class="t-bar"><div class="alloc-mini-track"><div class="alloc-mini-fill" style="width:50%;background:linear-gradient(90deg,#1560b0,#38bdf8)"></div></div></td>
-            <td class="t-mono t-right">$1,750</td>
-          </tr>
-          <tr>
-            <td class="t-ticker">UNH</td>
-            <td class="t-name">UnitedHealth Group</td>
-            <td class="t-mono">6.0%</td>
-            <td class="t-bar"><div class="alloc-mini-track"><div class="alloc-mini-fill" style="width:43%;background:linear-gradient(90deg,#166534,#38d9a9)"></div></div></td>
-            <td class="t-mono t-right">$1,500</td>
-          </tr>
-          <tr>
-            <td class="t-ticker">V</td>
-            <td class="t-name">Visa Inc.</td>
-            <td class="t-mono">5.0%</td>
-            <td class="t-bar"><div class="alloc-mini-track"><div class="alloc-mini-fill" style="width:36%;background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div></td>
-            <td class="t-mono t-right">$1,250</td>
-          </tr>
-          <tr>
-            <td class="t-ticker">JNJ</td>
-            <td class="t-name">Johnson &amp; Johnson</td>
-            <td class="t-mono">4.0%</td>
-            <td class="t-bar"><div class="alloc-mini-track"><div class="alloc-mini-fill" style="width:29%;background:linear-gradient(90deg,#166534,#38d9a9)"></div></div></td>
-            <td class="t-mono t-right">$1,000</td>
-          </tr>
-          <tr>
-            <td class="t-ticker" style="color:var(--text2)">CASH</td>
-            <td class="t-name">Efectivo disponible</td>
-            <td class="t-mono">5.0%</td>
-            <td class="t-bar"><div class="alloc-mini-track"><div class="alloc-mini-fill" style="width:36%;background:linear-gradient(90deg,#374151,#6b7280)"></div></div></td>
-            <td class="t-mono t-right">$1,250</td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- FUND LEGEND -->
+  <div class="fund-legend animate d6">
+    <div class="fund-legend-label">Fondos comprando</div>
+    <div class="fund-pills">
+      <div class="fund-pill"><div class="fund-pill-dot" style="background:#7b8cff"></div>Berkshire Hathaway</div>
+      <div class="fund-pill"><div class="fund-pill-dot" style="background:#4ec9e8"></div>Bridgewater Associates</div>
+      <div class="fund-pill"><div class="fund-pill-dot" style="background:#3d9eff"></div>Citadel (Ken Griffin)</div>
+      <div class="fund-pill"><div class="fund-pill-dot" style="background:#38bdf8"></div>Renaissance Tech</div>
+      <div class="fund-pill"><div class="fund-pill-dot" style="background:#72c0ff"></div>ARK Invest</div>
     </div>
   </div>
 
@@ -480,9 +540,9 @@
           <div class="legend-item"><div class="legend-dot" style="background:#3d9eff"></div>Tecnologia 56%</div>
           <div class="legend-item"><div class="legend-dot" style="background:#7b8cff"></div>Financiero 14%</div>
           <div class="legend-item"><div class="legend-dot" style="background:#38d9a9"></div>Salud 10%</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div>Consumo Discr. 5%</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div>Pagos 5%</div>
           <div class="legend-item"><div class="legend-dot" style="background:#38bdf8"></div>Industrial 7%</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#fbbf24"></div>Energia 3%</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#fbbf24"></div>E-Commerce 3%</div>
           <div class="legend-item"><div class="legend-dot" style="background:#6b7280"></div>Cash 5%</div>
         </div>
       </div>
@@ -516,35 +576,33 @@
   <!-- ANALYSIS SECTIONS -->
   <div class="section-label animate d8"><h2>Analisis detallado del portafolio</h2></div>
 
-  <div class="analysis-grid">
-    <div class="analysis-card animate d8">
-      <div class="analysis-title">Resumen Ejecutivo</div>
-      <p class="analysis-text">Este portafolio esta disenado para capturar el alpha generado por las posiciones mas relevantes de los principales fondos institucionales segun sus 13F filings del Q4 2025. Con un <strong>capital inicial de $25,000</strong> distribuido en 11 posiciones activas mas reserva de efectivo, el portafolio busca un <strong>retorno anualizado del 18-22%</strong> con un Sharpe ratio objetivo de 0.88, superando al S&P 500 en aproximadamente 3-5 puntos porcentuales anuales.</p>
-      <p class="analysis-text">La estrategia combina <strong>exposicion a mega-caps tecnologicas</strong> (AAPL, MSFT, NVDA, GOOGL, AMZN, META) con posiciones defensivas en financieros (BRK.B, JPM, V) y salud (UNH, JNJ), logrando un balance entre crecimiento agresivo y estabilidad de capital que permite navegar ciclos de mercado con menor drawdown esperado.</p>
-    </div>
+  <div class="analysis-card animate d8">
+    <div class="analysis-title">Resumen Ejecutivo</div>
+    <p class="analysis-text">Este portafolio esta disenado para capturar el alpha generado por las posiciones mas relevantes de los principales fondos institucionales segun sus 13F filings del Q4 2025. Con un <strong>capital inicial de $25,000</strong> distribuido en 11 posiciones activas mas reserva de efectivo, el portafolio busca un <strong>retorno anualizado del 18-22%</strong> con un Sharpe ratio objetivo de 0.88, superando al S&P 500 en aproximadamente 3-5 puntos porcentuales anuales.</p>
+    <p class="analysis-text">La estrategia combina <strong>exposicion a mega-caps tecnologicas</strong> (AAPL, MSFT, NVDA, GOOGL, AMZN, META) con posiciones defensivas en financieros (BRK.B, JPM, V) y salud (UNH, JNJ), logrando un balance entre crecimiento agresivo y estabilidad de capital que permite navegar ciclos de mercado con menor drawdown esperado.</p>
+  </div>
 
-    <div class="analysis-card animate d8">
-      <div class="analysis-title">Filosofia de Inversion</div>
-      <p class="analysis-text">La construccion del portafolio sigue el principio de <strong>"seguir al dinero inteligente"</strong> — identificando las convergencias de posicionamiento entre Berkshire Hathaway, Bridgewater Associates, Renaissance Technologies, Citadel Advisors y ARK Invest. Cuando tres o mas de estos fondos mantienen o incrementan posiciones en el mismo activo, la probabilidad historica de outperformance a 12 meses supera el 72%.</p>
-      <p class="analysis-text">El 56% de exposicion a tecnologia refleja la <strong>conviccion institucional en el ciclo de IA generativa</strong>. NVDA lidera la infraestructura de computo, MSFT y GOOGL dominan la capa de aplicacion, META monetiza a traves de advertising AI, y AAPL capitaliza la distribucion masiva de dispositivos con capacidades on-device AI. Esta no es una apuesta tematica — es donde los fondos con mejor track record estan poniendo capital real.</p>
-    </div>
+  <div class="analysis-card animate d8">
+    <div class="analysis-title">Filosofia de Inversion</div>
+    <p class="analysis-text">La construccion del portafolio sigue el principio de <strong>"seguir al dinero inteligente"</strong> — identificando las convergencias de posicionamiento entre Berkshire Hathaway, Bridgewater Associates, Renaissance Technologies, Citadel Advisors y ARK Invest. Cuando tres o mas de estos fondos mantienen o incrementan posiciones en el mismo activo, la probabilidad historica de outperformance a 12 meses supera el 72%.</p>
+    <p class="analysis-text">El 56% de exposicion a tecnologia refleja la <strong>conviccion institucional en el ciclo de IA generativa</strong>. NVDA lidera la infraestructura de computo, MSFT y GOOGL dominan la capa de aplicacion, META monetiza a traves de advertising AI, y AAPL capitaliza la distribucion masiva de dispositivos con capacidades on-device AI. Esta no es una apuesta tematica — es donde los fondos con mejor track record estan poniendo capital real.</p>
+  </div>
 
-    <div class="analysis-card animate d9">
-      <div class="analysis-title">Gestion de Riesgo</div>
-      <p class="analysis-text">El portafolio mantiene un <strong>5% en efectivo</strong> como reserva tactica para aprovechar correcciones. La diversificacion sectorial limita la exposicion maxima a cualquier sector individual al 56% (tecnologia), con financiero (14%) y salud (10%) actuando como contrapesos naturales. Las posiciones defensivas — BRK.B con su balance de $321B en cash, UNH con flujos recurrentes de seguros, y JNJ con dividendos de 62 anos consecutivos — proporcionan un <strong>piso de proteccion durante bear markets</strong>.</p>
-      <p class="analysis-text">El <strong>Sharpe ratio objetivo de 0.88</strong> indica un retorno ajustado al riesgo superior al promedio del mercado (S&P 500 historico ~0.65). La volatilidad esperada del portafolio es de ~16%, comparado con ~18% del Nasdaq 100, gracias a la inclusion de value stocks y el componente de cash. El max drawdown estimado en un escenario de recesion moderada es de -18 a -22%, inferior al -25 a -30% del mercado general.</p>
-    </div>
+  <div class="analysis-card animate d9">
+    <div class="analysis-title">Gestion de Riesgo</div>
+    <p class="analysis-text">El portafolio mantiene un <strong>5% en efectivo</strong> como reserva tactica para aprovechar correcciones. La diversificacion sectorial limita la exposicion maxima a cualquier sector individual al 56% (tecnologia), con financiero (14%) y salud (10%) actuando como contrapesos naturales. Las posiciones defensivas — BRK.B con su balance de $321B en cash, UNH con flujos recurrentes de seguros, y JNJ con dividendos de 62 anos consecutivos — proporcionan un <strong>piso de proteccion durante bear markets</strong>.</p>
+    <p class="analysis-text">El <strong>Sharpe ratio objetivo de 0.88</strong> indica un retorno ajustado al riesgo superior al promedio del mercado (S&P 500 historico ~0.65). La volatilidad esperada del portafolio es de ~16%, comparado con ~18% del Nasdaq 100, gracias a la inclusion de value stocks y el componente de cash. El max drawdown estimado en un escenario de recesion moderada es de -18 a -22%, inferior al -25 a -30% del mercado general.</p>
+  </div>
 
-    <div class="analysis-card animate d9">
-      <div class="analysis-title">Catalizadores Clave Q2-Q4 2026</div>
-      <p class="analysis-text"><strong>NVDA:</strong> Lanzamiento de la arquitectura Vera Rubin y expansion de partnerships con hyperscalers (MSFT Azure, GOOGL Cloud, AMZN AWS). <strong>META:</strong> Q1 earnings el 29 de abril, Instagram Plus alcanzando 50M suscriptores. <strong>AAPL:</strong> WWDC 2026 con Apple Intelligence 2.0 y nueva generacion de chips M5. <strong>JPM:</strong> Beneficiado por potenciales recortes de tasas Fed en H2 2026, expansion de margenes en banca de inversion.</p>
-      <p class="analysis-text"><strong>UNH:</strong> Medicare Advantage enrollment expansion. <strong>GOOGL:</strong> Gemini Ultra integrado en Search, Cloud AI revenue creciendo +35% YoY. <strong>BRK.B:</strong> Transicion a Greg Abel como CEO completada, $321B cash listos para adquisiciones. <strong>V:</strong> Expansion de pagos cross-border post-pandemia +22% YoY. Cada catalizador representa una oportunidad de revalorizacion que los fondos institucionales ya han posicionado en sus 13F filings.</p>
-    </div>
+  <div class="analysis-card animate d9">
+    <div class="analysis-title">Catalizadores Clave Q2-Q4 2026</div>
+    <p class="analysis-text"><strong>NVDA:</strong> Lanzamiento de la arquitectura Vera Rubin y expansion de partnerships con hyperscalers (MSFT Azure, GOOGL Cloud, AMZN AWS). <strong>META:</strong> Q1 earnings el 29 de abril, Instagram Plus alcanzando 50M suscriptores. <strong>AAPL:</strong> WWDC 2026 con Apple Intelligence 2.0 y nueva generacion de chips M5. <strong>JPM:</strong> Beneficiado por potenciales recortes de tasas Fed en H2 2026, expansion de margenes en banca de inversion.</p>
+    <p class="analysis-text"><strong>UNH:</strong> Medicare Advantage enrollment expansion. <strong>GOOGL:</strong> Gemini Ultra integrado en Search, Cloud AI revenue creciendo +35% YoY. <strong>BRK.B:</strong> Transicion a Greg Abel como CEO completada, $321B cash listos para adquisiciones. <strong>V:</strong> Expansion de pagos cross-border post-pandemia +22% YoY. Cada catalizador representa una oportunidad de revalorizacion que los fondos institucionales ya han posicionado en sus 13F filings.</p>
+  </div>
 
-    <div class="analysis-card animate d10">
-      <div class="analysis-title">Comparativa vs Benchmark</div>
-      <p class="analysis-text">En backtesting sobre los ultimos 5 anos, un portafolio con composicion similar habria generado un <strong>retorno acumulado del 142%</strong> vs 89% del S&P 500 y 156% del Nasdaq 100. La diferencia clave es el <strong>menor drawdown maximo</strong>: -19.4% vs -25.4% del S&P 500 durante la correccion de 2022, gracias a la inclusion de BRK.B (+6% ese ano), UNH (+3%) y JNJ (-2%). El ratio de captura al alza/baja es de 1.12/0.78, indicando que el portafolio captura el 112% de los movimientos alcistas pero solo el 78% de las caidas.</p>
-    </div>
+  <div class="analysis-card animate d10">
+    <div class="analysis-title">Comparativa vs Benchmark</div>
+    <p class="analysis-text">En backtesting sobre los ultimos 5 anos, un portafolio con composicion similar habria generado un <strong>retorno acumulado del 142%</strong> vs 89% del S&P 500 y 156% del Nasdaq 100. La diferencia clave es el <strong>menor drawdown maximo</strong>: -19.4% vs -25.4% del S&P 500 durante la correccion de 2022, gracias a la inclusion de BRK.B (+6% ese ano), UNH (+3%) y JNJ (-2%). El ratio de captura al alza/baja es de 1.12/0.78, indicando que el portafolio captura el 112% de los movimientos alcistas pero solo el 78% de las caidas.</p>
   </div>
 
   <!-- PERFORMANCE CHART -->
@@ -583,7 +641,7 @@
       <text x="827" y="278" fill="#2e5070" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Jul 27</text>
       <text x="980" y="278" fill="#2e5070" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Oct 27</text>
 
-      <!-- Cash line (flat-ish) -->
+      <!-- Cash line -->
       <polyline fill="none" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="4"
         points="60,260 213,250 367,242 520,234 673,226 827,218 980,212"/>
 
@@ -601,7 +659,7 @@
       <polyline fill="none" stroke="url(#sp-grad)" stroke-width="2"
         points="60,260 213,238 367,218 520,195 673,172 827,152 980,130"/>
 
-      <!-- Portfolio line (best performance) -->
+      <!-- Portfolio line -->
       <polyline fill="none" stroke="url(#port-grad)" stroke-width="2.5"
         points="60,260 213,230 367,198 520,165 673,128 827,85 980,28"/>
 
