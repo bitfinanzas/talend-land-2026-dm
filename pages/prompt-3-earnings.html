@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt 3 — Earnings · Daniel Muvdi Trading Coach</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1a1a;
+    --surface: #242424;
+    --surface2: #2a2a2a;
+    --surface3: #333;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.15);
+    --text: #e8e8e8;
+    --text2: #a0a0a0;
+    --text3: #666;
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.1);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.1);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.1);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.1);
+    --cyan: #22d3ee;
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .top-bar {
+    background: #111;
+    padding: 10px 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .top-bar span { color: var(--text3); }
+
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 24px 64px; position: relative; }
+
+  /* Logo corner */
+  .logo-corner {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 10;
+  }
+
+  /* Header */
+  .hdr {
+    padding: 24px 0 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .hdr-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .badge {
+    font-size: 11px; font-weight: 500; padding: 3px 10px;
+    border-radius: 6px; font-family: 'JetBrains Mono', monospace;
+    letter-spacing: .04em;
+  }
+  .badge-live { background: var(--red-dim); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
+  .badge-ac { background: var(--surface2); color: var(--text2); border: 1px solid var(--border2); }
+  .hdr h1 { font-size: 20px; font-weight: 500; color: var(--text); margin-top: 4px; }
+  .hdr p { font-size: 13px; color: var(--text2); margin-top: 4px; }
+  .hdr-vix { font-size: 12px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .card-hdr {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .ticker-box {
+    font-size: 16px; font-weight: 600; color: var(--text);
+  }
+  .company {
+    font-size: 12px; color: var(--text3); margin-top: 2px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .pill {
+    font-size: 10px; font-weight: 600; padding: 3px 10px;
+    border-radius: 999px; font-family: 'JetBrains Mono', monospace;
+    letter-spacing: .04em; text-transform: uppercase; white-space: nowrap;
+  }
+  .pill-beat { background: var(--green-dim); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+  .pill-miss { background: var(--red-dim); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
+  .pill-mixed { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(251,191,36,0.3); }
+  .pill-pending { background: var(--surface2); color: var(--text2); border: 1px solid var(--border2); }
+
+  /* Metrics row */
+  .metrics {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 10px; margin-bottom: 14px;
+  }
+  .metric {
+    background: var(--surface2);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+  }
+  .metric-label {
+    font-size: 10px; color: var(--text3);
+    text-transform: uppercase; letter-spacing: .04em;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 3px;
+  }
+  .metric-val {
+    font-size: 15px; font-weight: 600; color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .metric-sub {
+    font-size: 11px; color: var(--text2);
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 1px;
+  }
+
+  /* Sections inside cards */
+  .section { margin-bottom: 10px; }
+  .section-lbl {
+    font-size: 10px; font-weight: 600; color: var(--text3);
+    text-transform: uppercase; letter-spacing: .06em;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 4px;
+  }
+  .section-txt {
+    font-size: 13px; color: var(--text2); line-height: 1.6;
+  }
+
+  /* Strategy box */
+  .strat-box {
+    background: var(--blue-dim);
+    border: 1px solid rgba(96,165,250,0.2);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    margin-top: 10px;
+  }
+  .strat-lbl {
+    font-size: 10px; font-weight: 600; color: var(--blue);
+    text-transform: uppercase; letter-spacing: .06em;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 3px;
+  }
+  .strat-txt {
+    font-size: 13px; color: var(--blue); line-height: 1.55;
+  }
+
+  /* Sources */
+  .sources {
+    font-size: 11px; color: var(--text3); margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px; background: var(--border);
+    margin: 0 0 16px;
+  }
+
+  /* Ranking Table */
+  .rank-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .rank-title {
+    font-size: 14px; font-weight: 600; color: var(--text);
+    margin-bottom: 14px;
+  }
+  .rank-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .rank-table thead th {
+    font-size: 10px; font-weight: 600; color: var(--text3);
+    letter-spacing: .06em; text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 8px 12px; text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .rank-table tbody td {
+    padding: 10px 12px; color: var(--text2);
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .rank-table tbody tr:last-child td { border-bottom: none; }
+  .rank-table tbody tr:hover td { background: var(--surface2); }
+  .rank-ticker { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--text); }
+  .opp-alta { color: var(--green); font-weight: 600; }
+  .opp-med { color: var(--amber); font-weight: 600; }
+  .opp-baja { color: var(--text3); font-weight: 500; }
+
+  /* Macro box */
+  .macro-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .macro-lbl {
+    font-size: 10px; font-weight: 600; color: var(--text3);
+    text-transform: uppercase; letter-spacing: .06em;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 8px;
+  }
+  .macro-txt {
+    font-size: 13px; color: var(--text2); line-height: 1.65;
+  }
+
+  /* Disclaimer */
+  .disc {
+    font-size: 11px; color: var(--text3); line-height: 1.6;
+    border-top: 1px solid var(--border);
+    padding-top: 16px; margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .disc strong { color: var(--red); }
+
+  /* Animations */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  .animate { animation: fadeUp .5s ease both; }
+  .d1{animation-delay:.05s}.d2{animation-delay:.1s}.d3{animation-delay:.15s}
+  .d4{animation-delay:.2s}.d5{animation-delay:.25s}.d6{animation-delay:.3s}
+  .d7{animation-delay:.35s}.d8{animation-delay:.4s}.d9{animation-delay:.45s}
+  .d10{animation-delay:.5s}.d11{animation-delay:.55s}.d12{animation-delay:.6s}
+
+  @media (max-width: 780px) {
+    .metrics { grid-template-columns: 1fr; }
+    .top-bar { font-size: 9px; padding: 8px 16px; }
+    .container { padding: 0 16px 48px; }
+    .card { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar animate d1">
+  PORTAFOLIO V2 <span>·</span> EARNINGS <span>·</span> DESPUES DEL CIERRE <span>·</span> 9 ABR 2026
+</div>
+
+<div class="container">
+
+  <!-- LOGO -->
+  <div class="logo-corner">
+    <img src="../public/logo-white.png" alt="Daniel Muvdi Trading Coach" style="width:80px;height:auto;display:block;opacity:0.85;" />
+  </div>
+
+  <!-- HEADER -->
+  <div class="hdr animate d2">
+    <div class="hdr-top">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="badge badge-ac">Despues del cierre</span>
+        <span class="badge badge-live">9 ABR 2026</span>
+      </div>
+      <span class="hdr-vix">VIX: ~24 · S&P500: +0.44%</span>
+    </div>
+    <h1>Reporte diario de earnings – Despues del cierre</h1>
+    <p>Empresas con resultados liberados hoy tras el cierre de mercado · Estrategias de opciones incluidas</p>
+  </div>
+
+  <!-- BB -->
+  <div class="card animate d3">
+    <div class="card-hdr">
+      <div>
+        <div class="ticker-box">BB – BlackBerry Ltd.</div>
+        <div class="company">NYSE · Software embebido / Ciberseguridad · Cap: ~$2.0B</div>
+      </div>
+      <span class="pill pill-beat">BEAT</span>
+    </div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-label">EPS real vs est.</div>
+        <div class="metric-val">$0.06</div>
+        <div class="metric-sub">est. $0.04 (+50%)</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Rev. real vs est.</div>
+        <div class="metric-val">$156.0M</div>
+        <div class="metric-sub">est. $144.4M (+8%)</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Trimestre ant.</div>
+        <div class="metric-val">EPS $0.05</div>
+        <div class="metric-sub">vs est. $0.03 – beat</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Resultados clave</div>
+      <div class="section-txt">QNX record: $78.7M rev. +20% YoY. Secure Comms vuelve a crecer. FY2026: rev. $549M (+3%), GAAP neto +$53.2M (vs perdida $79M ano ant.). Guia FY2027: $584–$611M. Backlog royalties QNX: $950M.</div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Sentimiento</div>
+      <div class="section-txt">Positivo. Twitter/Reddit destaca 8 trimestres consecutivos de mejora en GAAP neto y retorno a crecimiento. Analistas sorprendidos por QNX +20%. [Newswire, GuruFocus, MarketBeat]</div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Pronostico 24–72h</div>
+      <div class="section-txt">+5% a +12% potencial en AH/apertura. IV historicamente baja en BB; momentum tecnico positivo (50DMA: $3.41). Beta 1.70 amplifica el movimiento.</div>
+    </div>
+    <div class="strat-box">
+      <div class="strat-lbl">Estrategia de opciones recomendada</div>
+      <div class="strat-txt">Call comprada OTM strike $4.00–$4.50 exp. 1–2 semanas. Beat masivo + guia solida justifican sesgo alcista; IV baja hace la prima asequible. Riesgo limitado a prima pagada.</div>
+    </div>
+    <div class="sources">Fuentes: Newswire, GuruFocus, MarketBeat, Yahoo Finance, BlackBerry IR</div>
+  </div>
+
+  <!-- STZ -->
+  <div class="card animate d4">
+    <div class="card-hdr">
+      <div>
+        <div class="ticker-box">STZ – Constellation Brands</div>
+        <div class="company">NYSE · Bebidas alcoholicas · Cap: ~$26.8B</div>
+      </div>
+      <span class="pill pill-beat">BEAT</span>
+    </div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-label">EPS real vs est.</div>
+        <div class="metric-val">$1.90</div>
+        <div class="metric-sub">est. $1.72 (+10.5%)</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Rev. real vs est.</div>
+        <div class="metric-val">$1.92B</div>
+        <div class="metric-sub">est. $1.88B (+2.1%)</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Reaccion hist. prom.</div>
+        <div class="metric-val">-1.1%</div>
+        <div class="metric-sub">rango: -17% a +5.3%</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Resultados clave</div>
+      <div class="section-txt">Q4 neto: $224.7M (vs perdida $370.6M ano ant.). Beer sigue siendo motor de crecimiento; rev. FY2026 total -3%. CEO entrante Nicholas Fink toma mando el 13 abr. Outlook: regreso al crecimiento, ambiente "dinamico".</div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Sentimiento</div>
+      <div class="section-txt">Mixto. Beat en Q4 positivo, pero guia cautelosa y caida FY top-line preocupa. CNBC/SA: analistas divididos; la transicion de CEO anade incertidumbre. [CNBC, StockTitan, Yahoo Finance]</div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Pronostico 24–72h</div>
+      <div class="section-txt">Movimiento contenido ±3–5%. STZ cotiza ~$153–$155; 200DMA ~$150. El beat puntual vs guia conservadora neutralizan la reaccion.</div>
+    </div>
+    <div class="strat-box">
+      <div class="strat-lbl">Estrategia de opciones recomendada</div>
+      <div class="strat-txt">Iron Condor corto-plazo (strikes $145P/$150P/$160C/$165C). Movimiento historico pequeno + sentimiento mixto + IV post-earnings sugiere rango lateral. Prima capturada si STZ se mantiene entre $150–$160.</div>
+    </div>
+    <div class="sources">Fuentes: CNBC, GlobeNewswire, StockTitan, Yahoo Finance, Benzinga</div>
+  </div>
+
+  <!-- APLD -->
+  <div class="card animate d5">
+    <div class="card-hdr">
+      <div>
+        <div class="ticker-box">APLD – Applied Digital Corp.</div>
+        <div class="company">NASDAQ · Infraestructura AI / HPC Data Centers · Beta: 7.27</div>
+      </div>
+      <span class="pill pill-beat">BEAT MASIVO</span>
+    </div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-label">EPS ajustado vs est.</div>
+        <div class="metric-val">$0.09</div>
+        <div class="metric-sub">est. -$0.14 (+164%)</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Rev. HPC vs est.</div>
+        <div class="metric-val">$71.0M</div>
+        <div class="metric-sub">+67.7% sobre estimado</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Reaccion AH</div>
+        <div class="metric-val">+12.68%</div>
+        <div class="metric-sub">+10.37% en regular</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Resultados clave</div>
+      <div class="section-txt">EBITDA ajustado: $44.1M. 100 MW data center liquid-cooled online. Polaris Forge 1 y 2 en tiempo. CoreWeave SPV restructurado con rating A3. Delta Forge 1: 430 MW en construccion. GAAP net loss: $100.9M (non-cash write-down $59.7M).</div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Sentimiento</div>
+      <div class="section-txt">Muy positivo en AH; Reddit/Twitter celebra beat masivo y ejecucion operativa. Riesgo dilucion (ATM $60M) mencionado. +447% retorno 12 meses. [Investing.com, Yahoo Finance, Motley Fool]</div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Pronostico 24–72h</div>
+      <div class="section-txt">+10% a +25% en apertura. Alta volatilidad (beta 7.27). Posible consolidacion tras spike; cadena de suministro AI sigue siendo riesgo de mediano plazo.</div>
+    </div>
+    <div class="strat-box">
+      <div class="strat-lbl">Estrategia de opciones recomendada</div>
+      <div class="strat-txt">Bull Call Spread (compra call ATM + venta call OTM +15%). IV post-earnings inflada hace costosas las calls puras; el spread reduce prima neta y limita riesgo al tiempo que captura el movimiento alcista ya iniciado en AH.</div>
+    </div>
+    <div class="sources">Fuentes: Investing.com, Motley Fool, Applied Digital IR, Yahoo Finance</div>
+  </div>
+
+  <!-- PSMT -->
+  <div class="card animate d6">
+    <div class="card-hdr">
+      <div>
+        <div class="ticker-box">PSMT – PriceSmart Inc.</div>
+        <div class="company">NASDAQ · Retail / Warehouse Clubs LATAM · Cap: mediana</div>
+      </div>
+      <span class="pill pill-beat">BEAT</span>
+    </div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-label">EPS real</div>
+        <div class="metric-val">$1.62</div>
+        <div class="metric-sub">diluted por accion</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Rev. total</div>
+        <div class="metric-val">$1.50B</div>
+        <div class="metric-sub">+9.7% YoY</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Net merch. sales</div>
+        <div class="metric-val">$1.47B</div>
+        <div class="metric-sub">+9.9% YoY; comps +7.6%</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Resultados clave</div>
+      <div class="section-txt">Ventas constantes en moneda local +7.8%. FX positivo (+$27.7M). Planea 4 nuevos clubes en 2026 (de 56 a 60). Expansion Guatemala (club 8) anunciada. Momentum solido en LATAM.</div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Sentimiento</div>
+      <div class="section-txt">Positivo. Crecimiento consistente y expansion geografica bien recibidos. Riesgo: exposicion a FX y ambiente macro LATAM. [PRNewswire, Yahoo Finance]</div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Pronostico 24–72h</div>
+      <div class="section-txt">+3% a +6% moderado. PSMT tiende a movimientos contenidos post-earnings. Stock defensivo con buenas comps.</div>
+    </div>
+    <div class="strat-box">
+      <div class="strat-lbl">Estrategia de opciones recomendada</div>
+      <div class="strat-txt">Call spread bull OTM moderado (ej. +$5% / +$10% sobre precio actual). Beat solido pero accion tipicamente no ofrece grandes saltos; el spread captura upside limitado con costo reducido vs call simple.</div>
+    </div>
+    <div class="sources">Fuentes: PRNewswire, Yahoo Finance, Benzinga, StockTitan</div>
+  </div>
+
+  <!-- ROOT -->
+  <div class="card animate d7">
+    <div class="card-hdr">
+      <div>
+        <div class="ticker-box">ROOT – Root Insurance</div>
+        <div class="company">NASDAQ · InsurTech · Cap: pequena</div>
+      </div>
+      <span class="pill pill-pending">REPORTA HOY</span>
+    </div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-label">EPS estimado</div>
+        <div class="metric-val">$0.03</div>
+        <div class="metric-sub">[Benzinga]</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Rev. estimada</div>
+        <div class="metric-val">$68.7M</div>
+        <div class="metric-sub">[Benzinga]</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Trimestre ant.</div>
+        <div class="metric-val">Perdida</div>
+        <div class="metric-sub">mejora progresiva</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Contexto</div>
+      <div class="section-txt">InsurTech en transicion hacia rentabilidad. Pendiente de resultados; alta sensibilidad si beat en EPS (primera rentabilidad trimestral). Volumen de opciones historicamente bajo.</div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Sentimiento</div>
+      <div class="section-txt">Mixto-neutral. Traders especulativos siguen el turnaround. Reddit/WSB mencionan ROOT ocasionalmente como momentum play. [Benzinga]</div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Pronostico 24–72h</div>
+      <div class="section-txt">±8–15% dependiendo de resultado. Pequena cap con alta volatilidad implicita.</div>
+    </div>
+    <div class="strat-box">
+      <div class="strat-lbl">Estrategia de opciones recomendada</div>
+      <div class="strat-txt">Straddle ATM corto vencimiento. Alta IV + incertidumbre resultado + cap pequena → movimiento grande en cualquier direccion. El straddle captura el movimiento sin sesgo direccional.</div>
+    </div>
+    <div class="sources">Fuentes: Benzinga</div>
+  </div>
+
+  <!-- WDFC -->
+  <div class="card animate d8">
+    <div class="card-hdr">
+      <div>
+        <div class="ticker-box">WDFC – WD-40 Company</div>
+        <div class="company">NASDAQ · Productos industriales/consumidor</div>
+      </div>
+      <span class="pill pill-pending">REPORTA HOY</span>
+    </div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-label">EPS estimado</div>
+        <div class="metric-val">$1.40</div>
+        <div class="metric-sub">[Benzinga]</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Rev. estimada</div>
+        <div class="metric-val">$154.3M</div>
+        <div class="metric-sub">[Benzinga]</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Historial beat</div>
+        <div class="metric-val">Frecuente</div>
+        <div class="metric-sub">marca consistente</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Contexto</div>
+      <div class="section-txt">Marca global defensiva. Exposicion a FX y costos de materias primas. El ceasefire con Iran podria bajar costos de insumos industriales, beneficio moderado.</div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Sentimiento</div>
+      <div class="section-txt">Positivo-estable. No es ticker especulativo; analistas ven crecimiento internacional como catalizador. [Benzinga, Yahoo Finance]</div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Pronostico 24–72h</div>
+      <div class="section-txt">Movimiento contenido ±2–4%. Stock defensivo de baja beta.</div>
+    </div>
+    <div class="strat-box">
+      <div class="strat-lbl">Estrategia de opciones recomendada</div>
+      <div class="strat-txt">Iron Condor amplio. Baja IV y baja beta hacen poco atractivas las estrategias direccionales; capturar prima con rango lateral es lo optimo para este perfil defensivo.</div>
+    </div>
+    <div class="sources">Fuentes: Benzinga</div>
+  </div>
+
+  <!-- BYRN -->
+  <div class="card animate d9">
+    <div class="card-hdr">
+      <div>
+        <div class="ticker-box">BYRN – Byrna Technologies</div>
+        <div class="company">NASDAQ · Seguridad / No-letal · Cap: pequena</div>
+      </div>
+      <span class="pill pill-pending">REPORTA HOY</span>
+    </div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-label">EPS estimado</div>
+        <div class="metric-val">$0.05</div>
+        <div class="metric-sub">[Benzinga]</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Rev. estimada</div>
+        <div class="metric-val">$29.5M</div>
+        <div class="metric-sub">[Benzinga]</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Contexto sector</div>
+        <div class="metric-val">Defensa</div>
+        <div class="metric-sub">demanda gubernamental</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Contexto</div>
+      <div class="section-txt">Crecimiento en ventas de armamento no-letal para fuerzas del orden. Ceasefire Iran podria reducir urgencia de gasto gubernamental en defensa ligera a corto plazo.</div>
+    </div>
+    <div class="section">
+      <div class="section-lbl">Sentimiento</div>
+      <div class="section-txt">Neutral. Ticker de nicho; poco seguimiento retail. [Benzinga]</div>
+    </div>
+    <div class="strat-box">
+      <div class="strat-lbl">Estrategia de opciones recomendada</div>
+      <div class="strat-txt">Call OTM especulativo de bajo costo si se anticipa beat. Volumen de opciones bajo hace dificil ejecutar estrategias complejas en este ticker.</div>
+    </div>
+    <div class="sources">Fuentes: Benzinga</div>
+  </div>
+
+  <!-- RANKING TABLE -->
+  <div class="rank-card animate d10">
+    <div class="rank-title">Ranking de oportunidades – 9 de abril 2026</div>
+    <table class="rank-table">
+      <thead>
+        <tr><th>Ticker</th><th>Oportunidad</th><th>Razon</th><th>Estrategia</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rank-ticker">APLD</td>
+          <td class="opp-alta">Alta</td>
+          <td>Beat masivo +164% EPS; AH +12.7%; AI catalyst solido</td>
+          <td>Bull Call Spread</td>
+        </tr>
+        <tr>
+          <td class="rank-ticker">BB</td>
+          <td class="opp-alta">Alta</td>
+          <td>Beat +50% EPS; QNX record; guia FY27 solida; IV baja</td>
+          <td>Call OTM comprada</td>
+        </tr>
+        <tr>
+          <td class="rank-ticker">ROOT</td>
+          <td class="opp-med">Media</td>
+          <td>Posible primer trimestre rentable; alta volatilidad implicita</td>
+          <td>Straddle ATM</td>
+        </tr>
+        <tr>
+          <td class="rank-ticker">PSMT</td>
+          <td class="opp-med">Media</td>
+          <td>Beat solido +9.9% rev.; movimiento tipicamente moderado</td>
+          <td>Call Spread bull moderado</td>
+        </tr>
+        <tr>
+          <td class="rank-ticker">STZ</td>
+          <td class="opp-med">Media</td>
+          <td>Beat puntual pero guia conservadora; CEO transition = incertidumbre</td>
+          <td>Iron Condor</td>
+        </tr>
+        <tr>
+          <td class="rank-ticker">WDFC</td>
+          <td class="opp-baja">Baja</td>
+          <td>Defensivo; baja beta; movimiento minimo esperado</td>
+          <td>Iron Condor amplio</td>
+        </tr>
+        <tr>
+          <td class="rank-ticker">BYRN</td>
+          <td class="opp-baja">Baja</td>
+          <td>Nicho; bajo volumen opciones; dificil ejecucion</td>
+          <td>Call OTM especulativo</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- MACRO BOX -->
+  <div class="macro-box animate d11">
+    <div class="macro-lbl">Riesgos macro del dia – 9 abr 2026</div>
+    <div class="macro-txt">VIX ~24 (bajo desde ~30 tras ceasefire Iran-EE.UU., pero ceasefire "fragil" segun VP Vance). WTI ~$97 (reboto tras caida -16% del miercoles). Fed: probabilidad de recorte sube a 43% segun CME FedWatch. Rendimiento del T-10Y: 4.36% (+subiendo). PCE feb. disponible esta semana; CPI marzo viernes = catalizador potencial. Hormuz: apertura condicionada por Iran. Riesgo principal: colapso ceasefire = spike rapido en VIX y energia. [Bloomberg, CNBC, Reuters, Zacks]</div>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disc animate d12">
+    <strong>Disclaimer:</strong> Este reporte es exclusivamente informativo y educativo. No constituye asesoria financiera, de inversion ni de opciones. Las estrategias de opciones descritas conllevan riesgos significativos, incluyendo perdida total de la prima invertida. Las opciones pueden expirar sin valor. Consulte a un asesor financiero certificado antes de operar. Datos verificados en fuentes publicas al 9 de abril de 2026. Rendimientos pasados no garantizan resultados futuros.
+    <br><br>
+    by Daniel Muvdi · Trading Coach · Talent Land 2026 MX
+  </div>
+
+</div>
+</body>
+</html>
